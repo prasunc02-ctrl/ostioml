@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Osteoporosis Risk Predictor</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #74ebd5 0%, #9face6 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0px 6px 20px rgba(0,0,0,0.15);
+      width: 420px;
+      animation: fadeIn 0.8s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 25px;
+    }
+    label {
+      font-weight: 600;
+      display: block;
+      margin: 12px 0 5px;
+      color: #34495e;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+    input[type="range"] {
+      padding: 0;
+    }
+    button {
+      width: 100%;
+      background: #3498db;
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #2980b9;
+    }
+    .result {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      padding: 10px;
+      border-radius: 8px;
+    }
+    .high-risk {
+      background: #ffe6e6;
+      color: #e74c3c;
+    }
+    .low-risk {
+      background: #e6ffe6;
+      color: #27ae60;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Osteoporosis Risk Predictor</h1>
+    <form action="/predict" method="post">
+      
+      <label for="age">Age:</label>
+      <input type="number" name="age" min="10" max="120" required>
+
+      <label for="gender">Gender:</label>
+      <select name="gender" required>
+        <option value="0">Male</option>
+        <option value="1">Female</option>
+      </select>
+
+      <label for="hormone">Hormone Therapy:</label>
+      <select name="hormone" required>
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+      </select>
+
+      <label for="fhistory">Family History:</label>
+      <select name="fhistory" required>
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+      </select>
+
+      <label for="weight">Weight (kg):</label>
+      <input type="number" name="weight" min="20" max="200" required>
+
+      <label for="activity">Activity Level:</label>
+      <select name="activity" required>
+        <option value="0">Low</option>
+        <option value="1">High</option>
+      </select>
+
+      <label for="smoking">Smoking:</label>
+      <select name="smoking" required>
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+      </select>
+
+      <label for="medcondition">Medical Condition:</label>
+      <select name="medcondition" required>
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+      </select>
+
+      <label for="fractures">Previous Fractures:</label>
+      <select name="fractures" required>
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+      </select>
+
+      <button type="submit">Predict Risk</button>
+    </form>
+
+    {% if prediction_text %}
+      <div class="result {% if 'High Risk' in prediction_text %}high-risk{% else %}low-risk{% endif %}">
+        {{ prediction_text }}
+      </div>
+    {% endif %}
+  </div>
+</body>
+</html>
